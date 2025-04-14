@@ -12,17 +12,17 @@ class KiteHomePage extends ConsumerWidget {
 
     return Scaffold(
         body: kiteNews.when(
-            data: (data) => data.clusters.isNotEmpty ? Text("$data") 
-                // ? ListView.builder(
-                //     itemCount: data.clusters.length,
-                //     itemBuilder: (context, index) {
-                //       final article = data.clusters[index];
-                //       return ListTile(
-                //         title: Text(article.title),
-                //         subtitle: Text(article.location),
-                //       );
-                //     },
-                //   )
+            data: (data) => data.clusters.isNotEmpty
+                ? ListView.builder(
+                    itemCount: data.clusters.length,
+                    itemBuilder: (context, index) {
+                      final article = data.clusters[index];
+                      return ListTile(
+                        title: Text(article.title),
+                        subtitle: Text(article.location),
+                      );
+                    },
+                  )
                 : Center(child: Text('No Data')),
             error: (error, stack) => Center(child: SelectableText('Error: $error , Stack: $stack')),
             loading: () => Center(child: Text('Loading...')),
