@@ -1,80 +1,112 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart'; // Ensure this import is correct
-import 'package:kite_news/presentation/providers/categories_provider.dart';
-import 'package:kite_news/presentation/providers/kite_news_provider.dart';
+import 'package:kite_news/presentation/screens/history_page.dart';
+import 'package:kite_news/presentation/screens/home.dart';
+import 'package:kite_news/presentation/screens/profilePage_screen.dart';
+import 'package:kite_news/presentation/screens/settings_page.dart';
+import 'package:kite_news/presentation/widgets/translatorText.dart';
 
 
-class KiteHomePage extends ConsumerWidget {
-  const KiteHomePage({super.key});
+class Home extends StatefulWidget {
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    final category = ref.watch(categoriesProvider);
-    final AsyncValue<List<AsyncValue>> kiteNews = category.when(
-      data: (data) => AsyncValue.data(data.map((category) => ref.watch(kiteNewsProvider(category)).whenData((kiteNews) => [kiteNews])).toList()),
-      error: (error, stack) => AsyncValue.error(error, stack),
-      loading: () => const AsyncValue.loading(),
+  State<Home> createState() => _HomeState();
+}
+
+class _HomeState extends State<Home> {
+
+  int _currentIndex = 0;
+
+  void _onTabSelected(int index) {
+    setState(() {
+      _currentIndex = index;
+    });
+  }
+
+  Widget _getPage(int index) {
+    switch (index) {
+      case 0:
+        return const KiteHome();
+      case 1:
+        return const HistoryPage();
+      case 2:
+        return const ProfilePage(); 
+      default:
+        return const Scaffold(
+          body: Center(child: TranslatableText("Page not found")),
+        );
+    }
+  }
+  @override
+  Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
+    final textTheme = Theme.of(context).textTheme;
+    return Scaffold(
+        body: _getPage(_currentIndex),
+         bottomNavigationBar: BottomAppBar(
+          color: colorScheme.surfaceDim,
+          elevation: 10,
+          shape: const CircularNotchedRectangle(),
+          notchMargin: 6,
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                _buildTabItem(
+                  icon: Icons.home_rounded,
+                  label: "Home",
+                  selected: _currentIndex == 0,
+                  onTap: () {
+                    setState(() {});
+                    _onTabSelected(0);
+                  },
+                ),
+
+                _buildTabItem(
+                  icon: Icons.bookmark_rounded,
+                  label: "History",
+                  selected: _currentIndex == 2,
+                  onTap: () => _onTabSelected(1),
+                ), 
+                _buildTabItem(
+                  icon: Icons.person_rounded,
+                  label: "Profile",
+                  selected: _currentIndex == 3,
+                  onTap: () => _onTabSelected(2),
+                ),
+              ],
+            ),
+          ),
+        ),
     );
     
-    debugPrint('Kite categories: $category');
-    return Scaffold(
-      
-      body: category.when(
-        data: (data) {
-          return DefaultTabController(
-            length:   category.value!.length ,
-            child: Scaffold(
-              appBar: AppBar(
-                title: const Text('Kite News'),
-                bottom: TabBar(
-                  tabs: [
-                    ...data.map((category) => Tab(text: category)),
-                  ],
-                ),
-              ),
-              body: TabBarView(
-                children: data.map((category) {
-                  return kiteNews.when(
-                    data: (kiteNewsList) {
-                      final kiteNewsbyCategory = kiteNewsList[data.indexOf(category)];
-                      return kiteNewsbyCategory.when(
-                        data: (articles) {
-                          return ListView.builder(
-                            itemCount: articles[0].clusters.length,
-                            itemBuilder: (context, index) {
-                              final article = articles[0].clusters[index];
-                              return ListTile(
-                                title: Text(article.title),
-                                subtitle: Text(article.category),
-                                onTap: () {
-                                  // Handle article tap
-                                },
-                              );
-                            },
-                          );
-                        },
-                        error: (error, stack) => Center(child: SelectableText('Error: $error')),
-                        loading: () => const Center(child: CircularProgressIndicator()),
-                      );
-                    },
-                    error: (error, stack) => Center(child: Text('Error: $error + tabbarview')),
-                    loading: () => const Center(child: CircularProgressIndicator()),
-                  );
-                }).toList(),
-              ),
-            ),
-          );
-        }, error: (Object error, StackTrace stackTrace) { 
-          return Text(' $stackTrace');
-         },
-         loading: () {  
-          return const Center(child: CircularProgressIndicator());
-         }));
-       
-
   }
-  }
+  Widget _buildTabItem({
+  required IconData icon,
+  required String label,
+  required bool selected,
+  required VoidCallback onTap,
+}) {
+  return GestureDetector(
+    onTap: onTap,
+    child: Column(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        Icon(icon, color: selected ? Color(0xff007aff) : Color(0xff9e9e9e), size: 18,),
+        const SizedBox(height: 2),
+        TranslatableText(
+          label,
+          style: TextStyle(
+            fontSize: 10,
+            color: selected ? Color(0xff007aff) : Color(0xff9e9e9e),
+            fontWeight: FontWeight.w500,
+          ),
+        ),
+      ],
+    ),
+  );
+}
 
+}
 
-  
 
