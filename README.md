@@ -36,8 +36,21 @@ Kite News is a beautifully crafted, category-based news reader that curates the 
   
 
 ## 📸 Screenshots
+![Screenshot_2025-04-24-08-10-09-46_cff73a47cb9a4cc606591619a4447e63](https://github.com/user-attachments/assets/fdfe7ee8-ca68-4ee4-a882-f96187465f86)
+![Screenshot_2025-04-24-08-10-19-79_cff73a47cb9a4cc606591619a4447e63](https://github.com/user-attachments/assets/709821b8-2cbc-441c-a107-ce650ed2611a)
+![Screenshot_2025-04-24-08-10-34-09_cff73a47cb9a4cc606591619a4447e63](https://github.com/user-attachments/assets/06b86a32-9132-4b1a-beb9-f1bec32d9a04)
+![Screenshot_2025-04-24-08-10-48-60_cff73a47cb9a4cc606591619a4447e63](https://github.com/user-attachments/assets/14fde393-99ed-4603-a103-18b90d6a5172)
+![Screenshot_2025-04-24-08-10-58-21_cff73a47cb9a4cc606591619a4447e63](https://github.com/user-attachments/assets/73c2361c-cf6c-4bfc-8bba-e1b29ad6935a)
+![Screenshot_2025-04-24-08-11-03-10_cff73a47cb9a4cc606591619a4447e63](https://github.com/user-attachments/assets/37e9036a-fdd6-445d-a510-fae719108760)
+![Screenshot_2025-04-24-08-11-15-02_cff73a47cb9a4cc606591619a4447e63](https://github.com/user-attachments/assets/03214d8a-5907-4c1a-a746-17a1e42f4d30)
+![Screenshot_2025-04-24-08-11-24-20_cff73a47cb9a4cc606591619a4447e63](https://github.com/user-attachments/assets/ed76ccb2-1021-4fc3-b5f2-c558214ca799)
+![Screenshot_2025-04-24-08-11-28-53_cff73a47cb9a4cc606591619a4447e63](https://github.com/user-attachments/assets/b0613e79-6f62-40e3-8ef3-3d039a6776aa)
+![Screenshot_2025-04-24-08-11-40-45_cff73a47cb9a4cc606591619a4447e63](https://github.com/user-attachments/assets/e896b0ee-1501-4436-8d07-f89dc6bf9c87)
+![Uploading Screenshot_2025-04-24-08-10-39-97_cff73a47cb9a4cc606591619a4447e63.jpg…]()
 
-![image](https://github.com/user-attachments/assets/89e3db7f-0198-415d-9a58-8675bd04283f)
+
+
+
 
 
 ## 🚀 Getting Started
