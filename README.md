@@ -19,8 +19,6 @@ Kite News is a beautifully crafted, category-based news reader that curates the 
 - 🌓 **Dark Mode Support**  
   Read comfortably day or night with automatic theme switching.
 
-- 🔤 **Translation Friendly**  
-  Localized text with support for translations, thanks to our custom `TranslatableText` widget.
 
 ## 🧠 Powered By
 
@@ -32,6 +30,10 @@ Kite News is a beautifully crafted, category-based news reader that curates the 
 - **Custom Components**: For summaries, translations, and interactive tabs
   
 ## 🎥 ScreensRecord
+
+
+https://github.com/user-attachments/assets/2a006050-c180-43d0-8a35-ee0a6e3176f8
+
 
   
 
@@ -56,7 +58,7 @@ Kite News is a beautifully crafted, category-based news reader that curates the 
 ## 🚀 Getting Started
 
 ```bash
-git clone https://github.com/yourusername/kite-news.git
+git clone https://github.com/toyyibolo/kite-news.git
 cd kite-news
 flutter pub get
 flutter run
