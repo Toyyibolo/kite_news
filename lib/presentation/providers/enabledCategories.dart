@@ -48,14 +48,13 @@ final enabledCategoriesProvider =
 );
 
 
-class SelectedCategoryNotifier extends StateNotifier<String> {
-  SelectedCategoryNotifier(this.ref) : super(ref.read(enabledCategoriesProvider).first);
 
-  final Ref ref;
+
+class SelectedCategoryNotifier extends StateNotifier<String> {
+  SelectedCategoryNotifier(Ref ref) : super('');
 
   void select(String category) {
     if (state == category) {
-      // Force a rebuild by toggling to empty and back
       state = '';
       Future.microtask(() => state = category);
     } else {
@@ -64,7 +63,6 @@ class SelectedCategoryNotifier extends StateNotifier<String> {
   }
 }
 
-// Your provider
 final SelectedCategoriesProvider = StateNotifierProvider<SelectedCategoryNotifier, String>((ref) {
   return SelectedCategoryNotifier(ref);
 });

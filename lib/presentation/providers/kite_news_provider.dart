@@ -5,13 +5,14 @@ import 'package:kite_news/domain/repositories/kite_news_repositories_impl.dart';
 import 'package:kite_news/domain/usecases/fetch_kite_news.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+
 // Step 1: Provide the HTTP client
 final dioProvider = Provider<Dio>((ref) => Dio());
 
 // Step 2: Provide the repository implementation
 final kiteNewsRepositoryProvider = FutureProvider.family<KiteNewsRepositoryImpl, String>((ref, categoryName) async {
-  final dio = ref.read(dioProvider);
-  return KiteNewsRepositoryImpl(dio: dio, categoryName: categoryName);
+ // final dio = ref.read(dioProvider);
+  return KiteNewsRepositoryImpl(dio: Dio(), categoryName: categoryName);
 });
 
 // Step 3: Provide the use case (now async)
@@ -25,3 +26,9 @@ final kiteNewsProvider = FutureProvider.family<KiteNews, String>((ref, categoryN
   final fetchKiteNews = await ref.watch(fetchKiteNewsUseCaseProvider(categoryName).future);
   return fetchKiteNews();
 });
+
+
+
+
+
+

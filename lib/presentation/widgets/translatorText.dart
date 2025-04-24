@@ -25,25 +25,26 @@ class TranslatableText extends ConsumerStatefulWidget {
 }
 
 class _TranslatableTextState extends ConsumerState<TranslatableText> {
-  String? translated;
-  final translator = GoogleTranslator();
+ // String? translated;
+  //final translator = GoogleTranslator();
 
   @override
   void initState() {
     super.initState();
-    WidgetsBinding.instance.addPostFrameCallback((_) => _translateText());
+    //WidgetsBinding.instance.addPostFrameCallback((_) => _translateText());
   }
 
-  Future<void> _translateText() async {
-    final lang = ref.read(selectedLanguageProvider);
-    final result = await translator.translate(widget.data, to: lang);
-    if (mounted) setState(() => translated = result.text);
-  }
+  // Future<void> _translateText() async {
+  //   final lang = ref.read(selectedLanguageProvider);
+  //   final result = await translator.translate(widget.data, to: lang);
+  //   if (mounted) setState(() => translated = result.text);
+  // }
 
   @override
   Widget build(BuildContext context) {
     return Text(
-      translated ?? widget.data,
+      //translated ??
+       widget.data,
       style: widget.style,
       textAlign: widget.textAlign,
       maxLines: widget.maxLines,

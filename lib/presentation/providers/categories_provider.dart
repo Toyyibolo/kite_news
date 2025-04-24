@@ -1,11 +1,27 @@
+import 'dart:io';
+
+import 'package:dio/io.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:hive/hive.dart';
-import 'package:kite_news/data/models/kite_category_model.dart'; // Ensure correct import
-import 'dart:convert';
-import 'package:http/http.dart' as http;
+import 'package:kite_news/data/models/kite_category_model.dart';
+import 'package:dio/dio.dart';
+
+final dioProvider = Provider<Dio>((ref) {
+  final dio = Dio(BaseOptions(
+    connectTimeout: const Duration(seconds: 10),
+    receiveTimeout: const Duration(seconds: 10),
+  ));
+
+  // Optional: Accept self-signed certs (DEV ONLY)
+  // (dio.httpClientAdapter as DefaultHttpClientAdapter).onHttpClientCreate = (client) {
+  //   client.badCertificateCallback = (cert, host, port) => true;
+  //   return client;
+  // };
+
+  return dio;
+});
 
 final categoryBoxProvider = Provider<Box<Category>>((ref) {
-  // Provide access to the Category box in Hive
   return Hive.box<Category>('categoryBox');
 });
 
@@ -13,22 +29,55 @@ final categoriesProvider = FutureProvider<List<String>>((ref) async {
   final box = ref.read(categoryBoxProvider);
   final cachedCategories = box.values.toList();
 
-  // If categories are cached, return them
   if (cachedCategories.isNotEmpty) {
-    return cachedCategories.map((category) => category.file).toList();
-  } else {
-    // If no categories are cached, fetch from the API
-    final response = await http.get(Uri.parse("https://kite.kagi.com/kite.json"));
-    final data = jsonDecode(response.body);
-    List<Category> categoryObject = (data['categories'] as List)
-        .map((e) => Category.fromJson(e))
+    return cachedCategories
+        .map((category) => category.file.replaceAll('.json', '').replaceAll(' ', ''))
         .toList();
+  }
 
-    // Cache the categories in Hive
-    for (var category in categoryObject) {
-      await box.put(category.name, category);
+ final dio = createUnsafeDio();
+
+  try {
+    final response = await dio.get("https://kite.kagi.com/kite.json");
+
+    if (response.statusCode == 200 && response.data != null) {
+      final data = response.data;
+      final categoryObject = (data['categories'] as List)
+          .map((e) => Category.fromJson(e))
+          .toList();
+
+      for (final category in categoryObject) {
+        await box.put(category.name, category);
+      }
+
+      return categoryObject
+          .map((category) => category.file.replaceAll('.json', '').replaceAll(' ', ''))
+          .toList();
+    } else {
+      throw Exception("Failed to load categories. Status: ${response.statusCode}");
     }
-
-    return categoryObject.map((category) => category.file.replaceAll('.json', '')..replaceAll(' ', '')).toList();
+  } on DioException catch (e) {
+    throw Exception("Network error: ${e.message}");
+  } catch (e) {
+    throw Exception("Unexpected error: $e");
   }
 });
+
+
+Dio createUnsafeDio() {
+  final dio = Dio(
+    BaseOptions(
+      connectTimeout: const Duration(seconds: 10),
+      receiveTimeout: const Duration(seconds: 10),
+    ),
+  );
+
+  // Bypass SSL verification (ONLY for development)
+  (dio.httpClientAdapter as IOHttpClientAdapter).createHttpClient = () {
+    final client = HttpClient();
+    client.badCertificateCallback = (X509Certificate cert, String host, int port) => true;
+    return client;
+  };
+
+  return dio;
+}

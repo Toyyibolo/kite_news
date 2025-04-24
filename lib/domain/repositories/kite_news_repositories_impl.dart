@@ -23,16 +23,18 @@ class KiteNewsRepositoryImpl implements KiteNewsRepository {
 
   @override
   Future<KiteNews> fetchKiteNews() async {
-    final cachedData = kiteNewsBox.get('$categoryName.json');
+    final cacheKey = '$categoryName.json';
+    final cachedData = kiteNewsBox.get(cacheKey);
     if (cachedData != null) return cachedData;
 
+    final url = 'https://kite.kagi.com/$cacheKey';
+    assert(Uri.tryParse(url)?.hasAbsolutePath ?? false);
 
     try {
-      //print(categoryName);
-      String url = 'https://kite.kagi.com/$categoryName.json';
-      print(url);
+      debugPrint('Fetching: $url');
+
       final response = await dio.get(
-        'https://kite.kagi.com/$categoryName.json',
+        url,
         options: Options(
           receiveTimeout: const Duration(seconds: 10),
           sendTimeout: const Duration(seconds: 10),
@@ -40,22 +42,25 @@ class KiteNewsRepositoryImpl implements KiteNewsRepository {
         onReceiveProgress: (received, total) {
           if (total != -1) {
             final percent = (received / total * 100).toStringAsFixed(0);
-            debugPrint('Fetching $categoryName.json: $percent%');
+            debugPrint('Downloading $cacheKey: $percent%');
           }
         },
       );
 
       if (response.statusCode == 200 && response.data != null) {
         final fetchedData = KiteNews.fromJson(response.data);
-
-        // Cache the fetched data
-        await kiteNewsBox.put('$categoryName.json', fetchedData);
-
+        await kiteNewsBox.put(cacheKey, fetchedData);
         return fetchedData;
       } else {
         throw Exception('Failed to load news. Status code: ${response.statusCode}');
       }
+
     } on DioException catch (e) {
+      debugPrint('Dio Error Message: ${e.message}');
+      debugPrint('Dio Error Type: ${e.type}');
+      debugPrint('Dio Response: ${e.response}');
+      debugPrint('Dio Stacktrace: ${e.stackTrace}');
+
       if (e.type == DioExceptionType.connectionTimeout ||
           e.type == DioExceptionType.receiveTimeout) {
         throw Exception('Connection timed out while fetching news.');
@@ -64,7 +69,10 @@ class KiteNewsRepositoryImpl implements KiteNewsRepository {
       } else {
         throw Exception('Unexpected Dio error: ${e.message}');
       }
-    } catch (e) {
+
+    } catch (e, stack) {
+      debugPrint('General fetch error: $e');
+      debugPrint('Stacktrace: $stack');
       throw Exception('Failed to fetch Kite News: $e');
     }
   }
@@ -73,3 +81,6 @@ class KiteNewsRepositoryImpl implements KiteNewsRepository {
     await kiteNewsBox.clear();
   }
 }
+
+
+
