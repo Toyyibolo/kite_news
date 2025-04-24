@@ -1,16 +1,44 @@
-# kite_news
+# 🪁 Kite News — Your Gateway to Global Perspectives
 
-A new Flutter project.
+Kite News is a beautifully crafted, category-based news reader that curates the most relevant and diverse stories from around the globe. Whether you're catching up on politics, tech, sports, or science, Kite News gives you the **bird's-eye view** — fast, elegant, and personal.
 
-## Getting Started
+## ✨ Features
 
-This project is a starting point for a Flutter application.
+- 🗂️ **Smart Category Filters**  
+  Instantly explore news by selecting your favorite topics. Personalize your view and switch effortlessly.
 
-A few resources to get you started if this is your first Flutter project:
+- 🌍 **Multi-Perspective Clusters**  
+  See how different sources report the same story. Understand the full picture, not just one side.
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+- 📆 **Daily Summary**  
+  Kickstart your day with a brief and friendly summary tailored to the current date and time of day.
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+- 💡 **Beautiful & Minimal UI**  
+  Clean, distraction-free reading experience with intuitive navigation and smooth transitions.
+
+- 🌓 **Dark Mode Support**  
+  Read comfortably day or night with automatic theme switching.
+
+- 🔤 **Translation Friendly**  
+  Localized text with support for translations, thanks to our custom `TranslatableText` widget.
+
+## 🧠 Powered By
+
+- **Flutter**: Cross-platform mobile magic  
+- **Riverpod**: Robust and scalable state management  
+- **Hive**: Local persistence for category preferences  
+- **Intl**: Smart date and time formatting  
+- **Flutter SVG**: Crisp icons and branding  
+- **Custom Components**: For summaries, translations, and interactive chips
+
+## 📸 Screenshots
+
+_Coming Soon_
+
+## 🚀 Getting Started
+
+```bash
+git clone https://github.com/yourusername/kite-news.git
+cd kite-news
+flutter pub get
+flutter run
