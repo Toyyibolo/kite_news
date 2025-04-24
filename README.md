@@ -29,7 +29,11 @@ Kite News is a beautifully crafted, category-based news reader that curates the 
 - **Hive**: Local persistence for category preferences  
 - **Intl**: Smart date and time formatting  
 - **Flutter SVG**: Crisp icons and branding  
-- **Custom Components**: For summaries, translations, and interactive chips
+- **Custom Components**: For summaries, translations, and interactive tabs
+  
+## 🎥 ScreensRecord
+
+  
 
 ## 📸 Screenshots
 
