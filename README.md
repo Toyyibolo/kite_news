@@ -37,7 +37,8 @@ Kite News is a beautifully crafted, category-based news reader that curates the 
 
 ## 📸 Screenshots
 
-_Coming Soon_
+![image](https://github.com/user-attachments/assets/89e3db7f-0198-415d-9a58-8675bd04283f)
+
 
 ## 🚀 Getting Started
 
